@@ -64,23 +64,23 @@ export default {
     },
     mutations: {
         removeFromItems: function (state, id) {
-           state.items = state.items.filter((item) => item.id !== id)
+           state.items = state.items.filter(item => item.id !== id)
         },
-        updateItemContent: function (state, id, title, text) {
-            state.items = state.items.map((item) => {
+        updateItemContent: function (state, { id, title, text }) {
+            state.items.forEach(item => {
                 if(item.id === id) {
-                    item.title = title;
-                    item.text = text;
+                    item.title = title
+                    item.text = text
                 }
-            });
+            })
         }
     },
     actions: {
         removeItem: ({ commit }, id) => {
             commit('removeFromItems', id)
         },
-        updateItem: ({ commit }, id, title, text) => {
-            commit('updateItemContent', id, title, text)
+        updateItem: ({ commit }, itemData) => {
+            commit('updateItemContent', itemData)
         }
     },
     getters: {

@@ -1,17 +1,20 @@
 <template>
   <div class="kanban__item">
     <div class="item__title">
-      <p v-if="item.titleIsEditing"><input type="text" @keyup.enter="confirmUpdate(item)" v-model.trim="titleEditValue"></p>
+      <p v-if="item.titleIsEditing">
+        <input type="text" @keyup.enter="confirmUpdate" v-model.trim="titleEditValue">
+      </p>
       <h3 v-else>{{ item.title }}</h3>
     </div>
     <div class="item__text">
-      <p v-if="item.textIsEditing"><textarea @keyup.enter="confirmUpdate(item)" v-model.trim="textEditValue"/>
+      <p v-if="item.textIsEditing">
+        <textarea @keyup.enter="confirmUpdate" v-model.trim="textEditValue"/>
       </p>
       <p v-else>{{ item.text }}</p>
     </div>
     <div class="item__controls">
       <button class="btn-remove" @click="removeItem"></button>
-      <button class="btn-update" @click="updateItemContent(item)"></button>
+      <button class="btn-update" @click="updateItemContent"></button>
     </div>
   </div>
 </template>
@@ -34,19 +37,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions('tags' ,[
+    ...mapActions('tasks' ,[
         'updateItem',
     ]),
-    updateItemContent: function (item) {
-      this.titleEditValue = item.title;
-      this.textEditValue = item.text;
-      item.titleIsEditing = !item.titleIsEditing;
-      item.textIsEditing = !item.textIsEditing;
+    updateItemContent: function () {
+      this.titleEditValue = this.item.title;
+      this.textEditValue = this.item.text;
+      this.item.titleIsEditing = !this.item.titleIsEditing;
+      this.item.textIsEditing = !this.item.textIsEditing;
     },
-    confirmUpdate: function (item) {
-      this.updateItem(item.id, this.titleEditValue, this.textEditValue)
-      item.titleIsEditing = !item.titleIsEditing;
-      item.textIsEditing = !item.textIsEditing;
+    confirmUpdate: function () {
+      this.item.titleIsEditing = !this.item.titleIsEditing;
+      this.item.textIsEditing = !this.item.textIsEditing;
+      this.updateItem({
+        id: this.item.id,
+        title: this.titleEditValue,
+        text: this.textEditValue
+      })
       this.titleEditValue = '';
       this.textEditValue = '';
     },
