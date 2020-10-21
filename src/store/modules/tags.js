@@ -3,28 +3,12 @@ import {v4 as uuidv4} from "uuid";
 export default {
   namespaced: true,
   state: {
-    tags: [
-      {
-        id: uuidv4(),
-        title: 'Job',
-        color: '#FF0000',
-        description: 'Suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit consequuntur expedita et cum',
-      },
-      {
-        id: uuidv4(),
-        title: 'Home',
-        color: '#00FF00',
-        description: 'Suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit consequuntur expedita et cum',
-      },
-      {
-        id: uuidv4(),
-        title: 'Other',
-        color: '#0000FF',
-        description: 'Suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit consequuntur expedita et cum',
-      },
-    ],
+    tags: [],
   },
   mutations: {
+    setTags: function (state, tags) {
+      tags.forEach(tag => state.tags.push(tag))
+    },
     removeFromTags: function (state, id) {
       state.tags = state.tags.filter((item) => item.id !== id);
     },

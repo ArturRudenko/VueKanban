@@ -21,7 +21,7 @@
         <p class="col__title">Choose tag color:</p>
       </div>
       <div class="col">
-        <input class="color-input" type="color" v-model.lazy="editedTag.colorEditValue">
+        <input class="color-input" type="color" v-model="editedTag.colorEditValue">
         <span class="add-tooltip"> * click to choose</span>
       </div>
     </div>
@@ -34,6 +34,12 @@
 import { mapActions } from 'vuex'
 
   export default {
+    props: {
+      tag: {
+        type: Object,
+        required: true
+      }
+    },
     data: function () {
       return {
         editedTag: {
@@ -55,12 +61,6 @@ import { mapActions } from 'vuex'
           color: this.editedTag.colorEditValue,
         });
       },
-    },
-    props: {
-      tag: {
-        type: Object,
-        required: true
-      }
     },
   }
 </script>

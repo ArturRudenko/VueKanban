@@ -40,12 +40,6 @@ export default {
     ...mapActions('tasks' ,[
         'updateItem',
     ]),
-    updateItemContent: function () {
-      this.titleEditValue = this.item.title;
-      this.textEditValue = this.item.text;
-      this.item.titleIsEditing = !this.item.titleIsEditing;
-      this.item.textIsEditing = !this.item.textIsEditing;
-    },
     confirmUpdate: function () {
       this.item.titleIsEditing = !this.item.titleIsEditing;
       this.item.textIsEditing = !this.item.textIsEditing;
@@ -56,6 +50,9 @@ export default {
       })
       this.titleEditValue = '';
       this.textEditValue = '';
+    },
+    updateItemContent: function () {
+      this.$emit('update', this.item)
     },
     removeItem: function () {
       this.$emit('remove', this.item.id);

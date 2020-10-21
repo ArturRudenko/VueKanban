@@ -20,7 +20,6 @@ export default new Router({
                   component: Kanban,
                   meta: {
                       title: 'Kanban',
-                      address: 'tags'
                   }
               },
               {
@@ -29,7 +28,6 @@ export default new Router({
                   component: Tags,
                   meta: {
                       title: 'Tags',
-                      address: 'kanban'
                   }
               },
               {
@@ -38,7 +36,6 @@ export default new Router({
                   component: Tag,
                   meta: {
                       title: 'Edit tag',
-                      address: 'tags'
                   }
               }
           ]

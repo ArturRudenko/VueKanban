@@ -3,7 +3,7 @@
     <h2 class="section-title">{{ colTitle }}</h2>
     <p class="col__placeholder" v-if="!items.length">No such cards</p>
     <p v-else class="col__length-info">{{ items.length }} cards</p>
-    <kanbanItem @remove="removeItem" v-for="item in items" :key="item.id" :item="item"></kanbanItem>
+    <kanbanItem @update="updateItem" @remove="removeItem" v-for="item in items" :key="item.id" :item="item"></kanbanItem>
   </div>
 </template>
 
@@ -31,6 +31,9 @@ export default {
   methods: {
     removeItem: function (itemId) {
       this.$emit('remove', itemId);
+    },
+    updateItem: function (item) {
+      this.$emit('update', item)
     }
   },
   components: {
