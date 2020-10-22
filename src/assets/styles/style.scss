@@ -155,8 +155,17 @@ body {
 
 
 .kanban {
-  & > .btn-custom {
-    width: 160px;
+  &__controls{
+    display: flex;
+    justify-content: space-between;
+    & > .btn-custom {
+      width: 160px;
+    }& > .btn-custom {
+       width: 160px;
+     }
+    .multi-select{
+      width: 400px;
+    }
   }
 
   &_content {
@@ -188,11 +197,20 @@ body {
     background: #F8F8FF;
     position: relative;
 
-    .item__title {
-      font-size: 1.2em;
-      line-height: 1.1em;
-      margin-bottom: 10px;
-      font-weight: bold;
+    .item__ {
+      &title {
+        font-size: 1.2em;
+        line-height: 1.1em;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      &tag {
+        display: inline-block;
+        color: #FFF;
+        padding: 8px;
+        margin: 0 5px 0 0;
+        border-radius: 50%;
+      }
     }
 
     input,
@@ -332,12 +350,14 @@ body {
   }
 }
 
-.multiselect{
+.multi-select{
   position: relative;
   .output{
     display: flex;
     padding: 7px;
+    background: #fff;
     border: 1px solid $gray;
+    cursor: pointer;
   }
   .btn-show-options{
     width: 20px;
@@ -351,9 +371,13 @@ body {
   }
   .options{
     position: absolute;
-    top: 100%;
+    z-index: 1;
+    background: #fff;
+    top: 90%;
     left: 0;
     width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
     margin-top: -1px;
     border: 1px solid $gray;
     &__item{
@@ -365,6 +389,37 @@ body {
     }
   }
 }
+
+.task select{
+  position: relative;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+}
+
+.task .row:last-of-type .col:last-child{
+  position: relative;
+  &::before{
+    position: absolute;
+    content: '';
+    top: 10px;
+    right: 7px;
+    width: 20px;
+    height: 20px;
+    background: transparent url('../../assets/img/down-arrow.svg');
+    background-size: 100%;
+  }
+}
+
 .selected{
   background: $gray;
+}
+
+.selected-options__item{
+  display: inline-block;
+  padding: 4px;
+  margin: 0 5px 0 0;
+  border-radius: 50%;
+  background: $gray;
+  font-size: .88em;
 }
