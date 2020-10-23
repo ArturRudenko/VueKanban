@@ -49,7 +49,12 @@ import Multiselect from  '@/components/Multiselect'
   export default {
     watch: {
       task(task) {
-        this.editedTask = task
+        this.editedTask = {
+          tags: task.tags,
+          title: task.title,
+          text: task.text,
+          status: task.status
+        }
       }
     },
     props: {
@@ -57,7 +62,7 @@ import Multiselect from  '@/components/Multiselect'
         type: Object,
         description: function () {
           return {}
-        }
+        },
       }
     },
     data: function () {

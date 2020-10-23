@@ -12,8 +12,6 @@
   </div>
 </template>
 
-// TODO каждый новый айтем должен оборачиваться в новый объект
-
 <script>
   export default {
     watch: {

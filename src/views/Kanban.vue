@@ -11,6 +11,14 @@
   </div>
 </template>
 
+/*
+
+- Перенести стили в компоненты + переименовать классы по бэм
+- Проверить компонент редактирования тэга
+- Написать метод для кланирования таска в форме
+
+*/
+
 <script>
 import KanbanComp from "@/components/KanbanComp";
 import Modal from '@/components/Modal';
