@@ -1,14 +1,14 @@
 <template>
-  <div @dragover="onDragover"
-       @dragstart="onDragstart"
-       @drop="onDrop"
-       @update="updateItem"
-       @remove="removeItem"
-       class="kanban__col">
+  <div class="kanban__col">
     <h2 class="section-title">{{ colStatus}}</h2>
     <p class="col__placeholder" v-if="!items.length">No such cards</p>
     <p v-else class="col__length-info">{{ items.length }} cards</p>
     <kanbanItem draggable="true"
+                @dragover="onDragover"
+                @dragstart="onDragstart"
+                @drop="onDrop"
+                @update="updateItem"
+                @remove="removeItem"
                 v-for="item in items"
                 :key="item.id"
                 :data-id="item.id"
@@ -25,6 +25,9 @@ export default {
   name: 'kanbanCol',
   props: {
     colStatus: {
+      type: String,
+    },
+    className: {
       type: String,
     },
     items: {
@@ -53,11 +56,11 @@ export default {
       e.dataTransfer.setData('text', e.target.dataset.id);
     },
     onDrop(e) {
-      const draggedItem = e.dataTransfer.getData('text')
-
+      console.log(e)
+      const draggedItem = e.target.dataTransfer.getData('text')
       this.setStatus({
-        id: draggedItem,
-        status: this.colStatus
+        id: draggedItem.id,
+        status: draggedItem.status
       })
     },
     removeItem: function (itemId) {
