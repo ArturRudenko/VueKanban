@@ -28,7 +28,7 @@ export default {
           tag.description = description
         }
       })
-    }
+    },
   },
   actions: {
     removeTag: ({ commit }, id) => commit('removeFromTags', id),

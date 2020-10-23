@@ -30,10 +30,10 @@
         <p class="col__title">Choose task status:</p>
       </div>
       <div class="col">
-        <select type="text" @input="(evt) => editedTask.status = +evt.target.value" :value="editedTask.status">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
+        <select type="text" v-model="editedTask.status">
+          <option value="in queue">in queue</option>
+          <option value="in work">in work</option>
+          <option value="finished">finished</option>
         </select>
       </div>
     </div>
@@ -81,7 +81,7 @@ import Multiselect from  '@/components/Multiselect'
           'addItem',
       ]),
       confirmUpdate: function () {
-        if(this.editedTask.title && this.editedTask.text && this.editedTask.tags) {
+        if(this.editedTask.title && this.editedTask.text && this.editedTask.tags && this.editedTask.status) {
           this.isEdited = true;
           setTimeout(() => this.isEdited = false, 5000);
 

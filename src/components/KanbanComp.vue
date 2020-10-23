@@ -7,16 +7,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import kanbanCol from './KanbanCol'
 
 export default {
+  props: {
+    items: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
   computed: {
-    ...mapGetters('tasks', [
-      'inQueueItems',
-      'inWorkItems',
-      'finishedItems',
-    ])
+    inQueueItems() {
+      return  this.items.filter((item) => item.status === "in queue")
+    },
+    inWorkItems() {
+      return this.items.filter((item) => item.status === "in work")
+    },
+    finishedItems() {
+      return this.items.filter((item) => item.status === "finished")
+    }
   },
   methods: {
     ...mapActions('tasks', ['removeItem']),

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import taskStatuses from "@/utils/taskStatuses";
 
 const tags = [
   {
@@ -24,49 +25,49 @@ const tags = [
 const tasks = [
   {
     id: uuidv4(),
-    status: 1,
+    status: taskStatuses["in queue"],
     tags: [tags[0],tags[2]],
     title: 'Sunt aut facere repellat',
     text: 'Quia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 3,
+    status: taskStatuses["finished"],
     tags: [tags[1]],
     title: 'Qui est esse quasi',
     text: 'Quia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 3,
+    status: taskStatuses["finished"],
     tags: [tags[1]],
     title: 'Ea molestias quasi exercitationem repellat qui ipsa sit aut',
     text: 'Quia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 2,
+    status: taskStatuses["in work"],
     tags: [tags[0]],
     title: 'Molestias',
     text: 'Quia et suscipit nsuscipit recusandae consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 1,
+    status: taskStatuses["in queue"],
     tags: [tags[1]],
     title: 'Aut facere repellat provident occaecati excepturi optio reprehenderit',
     text: 'Consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 2,
+    status: taskStatuses["in work"],
     tags: [tags[1],tags[0]],
     title: 'Repellat provident occaecati excepturi optio reprehenderit',
     text: 'Suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit consequuntur expedita et cum',
   },
   {
     id: uuidv4(),
-    status: 3,
+    status: taskStatuses["finished"],
     tags: [tags[2]],
     title: 'Optio reprehenderit',
     text: 'Quia et suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cumquia et suscipit nsuscipit recusandae consequuntur expedita et cum quia et suscipit nsuscipit recusandae consequuntur expedita et cum',

@@ -164,7 +164,7 @@ body {
        width: 160px;
      }
     .multi-select{
-      width: 400px;
+      width: 340px;
     }
   }
 
@@ -207,9 +207,9 @@ body {
       &tag {
         display: inline-block;
         color: #FFF;
-        padding: 8px;
+        padding: 7px;
         margin: 0 5px 0 0;
-        border-radius: 50%;
+        border-radius: 4px;
       }
     }
 
@@ -380,6 +380,7 @@ body {
     overflow-y: auto;
     margin-top: -1px;
     border: 1px solid $gray;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
     &__item{
       padding: 7px;
       cursor: pointer;
@@ -388,6 +389,15 @@ body {
       }
     }
   }
+}
+
+.selected-options__item{
+  display: inline-block;
+  padding: 4px;
+  margin: 0 5px 0 0;
+  border-radius: 8px;
+  background: $gray;
+  font-size: .88em;
 }
 
 .task select{
@@ -413,13 +423,4 @@ body {
 
 .selected{
   background: $gray;
-}
-
-.selected-options__item{
-  display: inline-block;
-  padding: 4px;
-  margin: 0 5px 0 0;
-  border-radius: 50%;
-  background: $gray;
-  font-size: .88em;
 }

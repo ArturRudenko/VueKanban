@@ -7,7 +7,7 @@
       <button class="btn-show-options"></button>
     </div>
     <div v-show="show" class="options">
-      <div v-for="item in items" :key="getId(item)" @click="changeSelected(item)" :class="['options__item', {'selected': item._isSelected}]">{{ getLabel(item) }}</div>
+      <div v-for="item in copyItems" :key="getId(item.source)" @click="changeSelected(item)" :class="['options__item', {'selected': item._isSelected}]">{{ getLabel(item.source) }}</div>
     </div>
   </div>
 </template>
@@ -56,19 +56,29 @@
          return item[this.identifier]
       },
       initUpdatedOptions: function () {
-        for(let item of this.items) {
-          item._isSelected = !!this.selectedItems.find(curItem => this.getId(curItem) === this.getId(item));
+        for(let item of this.copyItems) {
+          item._isSelected = !!this.selectedItems.find(curItem => this.getId(curItem) === this.getId(item.source));
         }
       },
       changeSelected: function (item) {
         let index = this.selectedItems.findIndex((curEl) => {
-          return (this.getId(curEl) === this.getId(item))
+          return (this.getId(curEl) === this.getId(item.source))
         });
         if(index === -1) {
-          this.selectedItems.push(item)
+          this.selectedItems.push(item.source)
         } else this.selectedItems.splice(index, 1)
         item._isSelected = !item._isSelected
         this.$emit('input', this.selectedItems)
+      }
+    },
+    computed: {
+      copyItems() {
+        return this.items.map(item => {
+          return  {
+            isSelected:false,
+            source: item
+          }
+        })
       }
     }
   }
