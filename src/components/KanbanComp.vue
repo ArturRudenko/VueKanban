@@ -1,13 +1,12 @@
 <template>
   <div class="kanban_content">
-    <kanbanCol @update="updateItem" @remove="removeFromItems"  col-title="In queue" class-name="kanban__col" :items="inQueueItems"/>
-    <kanbanCol @update="updateItem" @remove="removeFromItems" col-title="In work" class-name="kanban__col" :items="inWorkItems"/>
-    <kanbanCol @update="updateItem" @remove="removeFromItems" col-title="Finished" class-name="kanban__col" :items="finishedItems"/>
+    <kanbanCol @update="updateItem" @remove="removeFromItems"  col-status="in queue" :items="inQueueItems"/>
+    <kanbanCol @update="updateItem" @remove="removeFromItems" col-status="in work" :items="inWorkItems"/>
+    <kanbanCol @update="updateItem" @remove="removeFromItems" col-status="finished" :items="finishedItems"/>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import kanbanCol from './KanbanCol'
 
 export default {
@@ -31,9 +30,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('tasks', ['removeItem']),
     removeFromItems: function (itemId) {
-      this.removeItem(itemId)
+      this.$emit('remove', itemId)
     },
     updateItem: function (item){
       this.$emit('update', item)

@@ -7,7 +7,7 @@
       <button class="btn-custom" @click="changeModalStatus">Add new task</button>
       <Multiselect label="title" identifier="id" :items="allTags" v-model="chosenFilterTags" />
     </div>
-    <KanbanComp :items="tasks" @update="changeModalStatus"/>
+    <KanbanComp :items="tasks" @remove="removeFromItems" @update="changeModalStatus"/>
   </div>
 </template>
 
@@ -39,13 +39,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions('tasks', ['filterItems']),
+    ...mapActions('tasks', ['filterItems', 'removeItem']),
     changeModalStatus: function (item) {
       if(item.id) {
         this.taskData = item
       } else this.taskData = {}
       this.modalIsOpen = true
     },
+     removeFromItems: async function (itemId) {
+      await this.removeItem(itemId)
+      this.tasks = await this.filterItems(this.chosenFilterTags)
+    }
   },
   async created() {
     this.tasks = await this.filterItems([])

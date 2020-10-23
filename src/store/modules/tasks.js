@@ -11,7 +11,7 @@ export default {
     },
     removeFromItems: function (state, id) {
       state.items = state.items.filter(item => item.id !== id)
-      },
+    },
     updateItemContent: function (state, { id, title, text, tags, status }) {
       state.items.forEach(item => {
         if(item.id === id) {
@@ -21,6 +21,13 @@ export default {
           item.text = text
         }
       })
+    },
+    setItemStatus: function (state, { id, status }) {
+      state.items.forEach(item => {
+        if(item.id === id) {
+          item.status = status
+        }
+      });
     },
     addNewItem: function (state, { title, text, tags, status }) {
       state.items.push({
@@ -38,6 +45,9 @@ export default {
     },
     updateItem: ({ commit }, itemData) => {
       commit('updateItemContent', itemData)
+    },
+    setStatus: ({ commit }, itemData) => {
+      commit('setItemStatus', itemData)
     },
     addItem: ({ commit }, itemData) => {
       commit('addNewItem', itemData)

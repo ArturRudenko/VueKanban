@@ -1,22 +1,30 @@
 <template>
-  <div :class="className">
-    <h2 class="section-title">{{ colTitle }}</h2>
+  <div @dragover="onDragover"
+       @dragstart="onDragstart"
+       @drop="onDrop"
+       @update="updateItem"
+       @remove="removeItem"
+       class="kanban__col">
+    <h2 class="section-title">{{ colStatus}}</h2>
     <p class="col__placeholder" v-if="!items.length">No such cards</p>
     <p v-else class="col__length-info">{{ items.length }} cards</p>
-    <kanbanItem @update="updateItem" @remove="removeItem" v-for="item in items" :key="item.id" :item="item"></kanbanItem>
+    <kanbanItem draggable="true"
+                v-for="item in items"
+                :key="item.id"
+                :data-id="item.id"
+                :item="item">
+    </kanbanItem>
   </div>
 </template>
 
 <script>
 import kanbanItem from './KanbanItem'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'kanbanCol',
   props: {
-    colTitle: {
-      type: String,
-    },
-    className: {
+    colStatus: {
       type: String,
     },
     items: {
@@ -29,6 +37,29 @@ export default {
     return {}
   },
   methods: {
+    ...mapActions('tasks', ['setStatus']),
+    onDragover(e) {
+      if(e.preventDefault) {
+        e.preventDefault()
+      }
+
+      return false
+    },
+    onDragstart(e) {
+      if (!e.target.dataset.id) {
+        return ;
+      }
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text', e.target.dataset.id);
+    },
+    onDrop(e) {
+      const draggedItem = e.dataTransfer.getData('text')
+
+      this.setStatus({
+        id: draggedItem,
+        status: this.colStatus
+      })
+    },
     removeItem: function (itemId) {
       this.$emit('remove', itemId);
     },
