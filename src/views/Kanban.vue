@@ -7,20 +7,27 @@
       <btn-comp class="controls__btn" @click.native="changeModalStatus">Add new task</btn-comp>
       <multi-select label="title" identifier="id" :items="allTags" v-model="chosenFilterTags" />
     </div>
-    <kanban-comp :items="tasks" :columns="allColumns" itemStatusPropertyName="status" @remove="removeFromItems" @update="changeModalStatus"/>
+    <kanban-comp :items="tasks" :columns="allColumns" itemStatusPropertyName="status" @sort="sortItemsByDate">
+      <template v-slot:kanban-items="{ currentColItems }">
+          <kanban-item  v-for="item in currentColItems"
+                        :key="item.id"
+                        :item="item"
+                        @update="changeModalStatus"
+                        @remove="removeFromItems" />
+      </template>
+    </kanban-comp>
   </div>
 </template>
 
 /*
 
-- вынести метод сортировки в канбан
-- сделать слот под канбан-айтем с передачей пропса (слоты с ограниченной областью видимости)
 - Починить drag-and-drop
 
 */
 
 <script>
 import KanbanComp from "@/components/KanbanComp";
+import KanbanItem from '../components/KanbanItem.vue';
 import Modal from '@/components/Modal';
 import TaskForm from '@/components/TaskForm';
 import MultiSelect from "@/components/MultiSelect";
@@ -37,6 +44,7 @@ export default {
 
   components: {
     KanbanComp,
+    KanbanItem,
     Modal,
     TaskForm,
     MultiSelect,
@@ -61,7 +69,13 @@ export default {
      removeFromItems: async function (itemId) {
       await this.removeItem(itemId)
       this.tasks = await this.filterItems(this.chosenFilterTags)
-    }
+    },
+    sortItemsByDate: function (items) {
+      items.isBeenSorted = !items.isBeenSorted
+      if (items.isBeenSorted) {
+        items.sort((prevItem, nextItem) => prevItem.date.getTime() - nextItem.date.getTime())
+      } else items.sort((prevItem, nextItem) => nextItem.date.getTime() - prevItem.date.getTime())
+    },
   },
   async created() {
     this.tasks = await this.filterItems([])
