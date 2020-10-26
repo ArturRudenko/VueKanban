@@ -12,6 +12,7 @@
 
 <script>
   export default {
+    name: 'Modal',
     watch: {
       value(value) {
         this.show = value
@@ -33,3 +34,54 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .modal {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, .5);
+    transition: opacity .4s, visibility .4s;
+    &__title{
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    &__body {
+      min-height: 100%;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__content {
+      position: relative;
+      overflow-y: auto;
+      width: 90vw;
+      height: 90vh;
+      max-width: 800px;
+      max-height: 600px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #FFF;
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #FFF;
+      }
+
+      &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #FFF;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #C0C0C0;
+      }
+    }
+  }
+</style>

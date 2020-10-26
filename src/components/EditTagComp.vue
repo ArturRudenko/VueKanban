@@ -5,7 +5,7 @@
         <p class="col__title">Choose tag title:</p>
       </div>
       <div class="col">
-        <input type="text" v-model="editedTag.titleEditValue">
+        <input type="text" v-model="editedTag.titleEditValue" class="col__input">
       </div>
     </div>
     <div class="row">
@@ -13,7 +13,7 @@
         <p class="col__title">Choose tag description:</p>
       </div>
       <div class="col">
-        <textarea type="text" v-model="editedTag.descriptionEditValue" />
+        <textarea v-model="editedTag.descriptionEditValue"  class="col__input"/>
       </div>
     </div>
     <div class="row">
@@ -21,24 +21,31 @@
         <p class="col__title">Choose tag color:</p>
       </div>
       <div class="col">
-        <input class="color-input" type="color" v-model="editedTag.colorEditValue">
-        <span class="add-tooltip"> * click to choose</span>
+        <input type="color" v-model="editedTag.colorEditValue" class="col__input">
+        <tooltip-comp> * click to choose</tooltip-comp>
       </div>
     </div>
-    <p v-show="editedTag.isEdited" class="add-tooltip">Tag has been edited</p>
-    <button class="btn-custom" type="button" @click="confirmUpdate">Edit tag</button>
+    <p class="tag-edit__tooltip"><tooltip-comp v-show="editedTag.isEdited">Tag has been edited</tooltip-comp></p>
+    <btn-comp @click.native="confirmUpdate">Edit tag</btn-comp>
   </div>
 </template>
 
 <script>
+import TooltipComp from "@/components/TooltipComp";
+import BtnComp from "@/components/BtnComp";
 import { mapActions } from 'vuex'
 
   export default {
+  name: 'EditTagComp',
     props: {
       tag: {
         type: Object,
         required: true
       }
+    },
+    components: {
+      TooltipComp,
+      BtnComp,
     },
     data: function () {
       return {
@@ -64,3 +71,9 @@ import { mapActions } from 'vuex'
     },
   }
 </script>
+
+<style lang="scss">
+  .tag-edit__tooltip{
+    margin-bottom: 20px;
+  }
+</style>

@@ -1,13 +1,26 @@
 <template>
-  <div class="kanban_content">
-    <kanbanCol @update="updateItem" @remove="removeFromItems"  col-status="in queue" :items="inQueueItems"/>
-    <kanbanCol @update="updateItem" @remove="removeFromItems" col-status="in work" :items="inWorkItems"/>
-    <kanbanCol @update="updateItem" @remove="removeFromItems" col-status="finished" :items="finishedItems"/>
+  <div class="kanban__content">
+    <kanban-col v-for="(col) of columns"
+                :key="col.alias"
+                :items-amount="itemsFilteredByStatuses[col.alias].length"
+                @sort="sortItemsByDate(itemsFilteredByStatuses[col.alias])">
+      <template #title>
+        {{ col.title }}
+      </template>
+      <template #items>
+        <kanban-item  v-for="item in itemsFilteredByStatuses[col.alias]"
+                      :key="item.id"
+                      :item="item"
+                      @update="updateItem"
+                      @remove="removeFromItems"/>
+      </template>
+    </kanban-col>
   </div>
 </template>
 
 <script>
-import kanbanCol from './KanbanCol'
+import KanbanCol from './KanbanCol'
+import KanbanItem from "@/components/KanbanItem";
 
 export default {
   props: {
@@ -16,20 +29,40 @@ export default {
       default: function () {
         return []
       }
+    },
+    columns: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    itemStatusPropertyName: {
+      type: String
+    }
+  },
+  data: function () {
+    return {
+
     }
   },
   computed: {
-    inQueueItems() {
-      return  this.items.filter((item) => item.status === "in queue")
+    itemsFilteredByStatuses() {
+      let filteredItems = {}
+
+      this.columns.forEach(property => {
+        filteredItems[property.alias] = this.items.filter(item => item[this.itemStatusPropertyName] === property.alias)
+      });
+
+      return filteredItems
     },
-    inWorkItems() {
-      return this.items.filter((item) => item.status === "in work")
-    },
-    finishedItems() {
-      return this.items.filter((item) => item.status === "finished")
-    }
   },
   methods: {
+    sortItemsByDate: function (items) {
+      items.isBeenSorted = !items.isBeenSorted
+      if (items.isBeenSorted) {
+        items.sort((prevItem, nextItem) => prevItem.date.getTime() - nextItem.date.getTime())
+      } else items.sort((prevItem, nextItem) => nextItem.date.getTime() - prevItem.date.getTime())
+    },
     removeFromItems: function (itemId) {
       this.$emit('remove', itemId)
     },
@@ -38,7 +71,18 @@ export default {
     }
   },
   components: {
-    kanbanCol,
+    KanbanItem,
+    KanbanCol,
   }
 }
 </script>
+
+<style lang="scss">
+.kanban{
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+}
+</style>

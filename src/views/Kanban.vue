@@ -1,21 +1,21 @@
 <template>
   <div class="kanban">
-    <Modal ref="modal" v-model="modalIsOpen">
-      <TaskForm :task="taskData" />
-    </Modal>
-    <div class="kanban__controls">
-      <button class="btn-custom" @click="changeModalStatus">Add new task</button>
-      <Multiselect label="title" identifier="id" :items="allTags" v-model="chosenFilterTags" />
+    <modal v-model="modalIsOpen">
+      <task-form :task="taskData" />
+    </modal>
+    <div class="kanban__controls controls">
+      <btn-comp class="controls__btn" @click.native="changeModalStatus">Add new task</btn-comp>
+      <multi-select label="title" identifier="id" :items="allTags" v-model="chosenFilterTags" />
     </div>
-    <KanbanComp :items="tasks" @remove="removeFromItems" @update="changeModalStatus"/>
+    <kanban-comp :items="tasks" :columns="allColumns" itemStatusPropertyName="status" @remove="removeFromItems" @update="changeModalStatus"/>
   </div>
 </template>
 
 /*
 
-- Перенести стили в компоненты + переименовать классы по бэм
-- Проверить компонент редактирования тэга
-- Написать метод для кланирования таска в форме
+- вынести метод сортировки в канбан
+- сделать слот под канбан-айтем с передачей пропса (слоты с ограниченной областью видимости)
+- Починить drag-and-drop
 
 */
 
@@ -23,7 +23,9 @@
 import KanbanComp from "@/components/KanbanComp";
 import Modal from '@/components/Modal';
 import TaskForm from '@/components/TaskForm';
-import Multiselect from "@/components/Multiselect";
+import MultiSelect from "@/components/MultiSelect";
+import BtnComp from "@/components/BtnComp";
+import columnProperties from "@/utils/columnProperties";
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -32,11 +34,13 @@ export default {
       this.tasks = await this.filterItems(selectedTags)
     },
   },
+
   components: {
     KanbanComp,
     Modal,
     TaskForm,
-    Multiselect,
+    MultiSelect,
+    BtnComp,
   },
   data: function () {
     return {
@@ -65,6 +69,24 @@ export default {
   computed: {
     ...mapGetters('tags', ['allTags']),
     ...mapGetters('tasks', ['allItems']),
+    allColumns() {
+      return  columnProperties
+    }
   }
 }
 </script>
+
+<style scoped lang="scss">
+  .kanban {
+    &__controls{
+      display: flex;
+      justify-content: space-between;
+      .controls__btn {
+        width: 160px;
+      }
+      .multi-select{
+        width: 340px;
+      }
+    }
+  }
+</style>

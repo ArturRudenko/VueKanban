@@ -1,9 +1,32 @@
-@import './variables.scss';
-
-* {
-  text-decoration: none;
+*{
   outline: none;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 body {
@@ -16,94 +39,20 @@ body {
   background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
+{
+  opacity: 0;
+}
+
 .wrapper {
   max-width: 1100px;
-  margin: $centered;
-  padding: 20px 10px 0px 10px;
+  margin: 0 auto;
+  padding: 20px 10px 0 10px;
 }
-
-.full-width {
-  width: 100%;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  &__links {
-    text-align: center;
-  }
-
-  .btn-custom {
-    padding: 10px 0;
-  }
-}
-
-.header__title,
-.modal__title{
-  font-size: 2.25em;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-size: 1.8em;
-}
-
-.add-tooltip {
-  color: darken($gray, 7%);
-  font-size: 0.88em;
-}
-
-.btn-custom {
-  display: inline-block;
-  background: #D3D3D3;
-  border: none;
-  width: 90px;
-  height: 40px;
-  margin: 0;
-  color: #252727;
-  font-size: 1.1em;
-  font-family: Arial, Helvetica, sans-serif;
-  cursor: pointer;
-
-  &:hover {
-    background: darken(#D3D3D3, 10%);
-  }
-
-  &:first-child {
-    margin-bottom: 1px;
-  }
-}
-
-.tags {
-  input {
-    border: 1px solid $gray;
-    background: transparent;
-    padding: 5px 10px;
-  }
-
-  &__list {
-    margin-top: 15px;
-    max-width: 600px;
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid $gray;
-    }
-  }
-
-  .controls .btn-custom:first-child {
-    margin-right: 10px;
-  }
-}
-
 
 .row {
   display: flex;
@@ -126,301 +75,26 @@ body {
     margin-bottom: 20px;
   }
 
-  input:not(.color-input),
-  textarea,
-  select{
+  &__input:not([type="color"]) {
     width: 100%;
     padding: 10px;
     resize: none;
     outline: none;
-    border: 1px solid $gray;
+    border: 1px solid #C0C0C0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
   }
 
-  textarea {
+  textarea.col__input {
     min-height: 150px;
   }
-}
 
-.color-input {
-  width: 60px;
-  padding: 0;
-  font-size: 2em;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-
-
-.kanban {
-  &__controls{
-    display: flex;
-    justify-content: space-between;
-    & > .btn-custom {
-      width: 160px;
-    }& > .btn-custom {
-       width: 160px;
-     }
-    .multi-select{
-      width: 340px;
-    }
-  }
-
-  &_content {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-  }
-
-  &__col {
-    width: 31.5%;
-    min-height: 60vh;
-    padding: 20px 10px 10px 10px;
-    border-radius: 8px;
-    background: #D3D3D3;
-  }
-
-  .col__ {
-    &placeholder,
-    &length-info {
-      margin: 15px 0 10px 0;
-      color: #808080;
-      font-size: 0.92em;
-    }
-  }
-
-  .kanban__item {
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #F8F8FF;
-    position: relative;
-
-    .item__ {
-      &title {
-        font-size: 1.2em;
-        line-height: 1.1em;
-        margin-bottom: 10px;
-        font-weight: bold;
-      }
-      &tag {
-        display: inline-block;
-        color: #FFF;
-        padding: 7px;
-        margin: 0 5px 0 0;
-        border-radius: 4px;
-      }
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      font-family: Arial, Helvetica, sans-serif;
-      resize: none;
-      border: 1px solid $gray;
-    }
-
-    textarea {
-      min-height: 120px;
-    }
-
-    .item__controls {
-      position: absolute;
-      height: 100%;
-      padding: 5px;
-      top: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      [class^="btn"] {
-        position: relative;
-        width: 15px;
-        height: 15px;
-        border: none;
-        cursor: pointer;
-        opacity: .5;
-        background: transparent;
-        transition: opacity .4s;
-
-        &:hover {
-          opacity: 1;
-
-          &::before {
-            visibility: visible;
-            opacity: 1;
-          }
-        }
-
-        &::before {
-          position: absolute;
-          top: -120%;
-          left: -240%;
-          content: '';
-          width: 90px;
-          background: rgba(128, 128, 128, .5);
-          visibility: hidden;
-          opacity: 0;
-          transition: visibility .4s, opacity .4s;
-        }
-      }
-
-      .btn-remove {
-        background: url(../img/close.svg);
-        background-size: 100%;
-
-        &::before {
-          content: 'Remove task';
-        }
-      }
-
-      .btn-update {
-        background: url(../img/pencil.svg);
-        background-size: 100%;
-
-        &::before {
-          content: 'Edit task';
-        }
-      }
-    }
-  }
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
-{
-  opacity: 0;
-}
-
-.modal {
-  top: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  background: rgba(0, 0, 0, .5);
-  transition: opacity .4s, visibility .4s;
-
-  &__title{
-    margin-bottom: 50px;
-    text-align: center;
-  }
-
-  &__body {
-    min-height: 100%;
-    padding: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__content {
-    position: relative;
-    overflow-y: auto;
-    width: 90vw;
-    height: 90vh;
-    max-width: 800px;
-    max-height: 600px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #FFF;
-
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #FFF;
-    }
-
-    &::-webkit-scrollbar {
-      width: 6px;
-      background-color: #FFF;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $gray;
-    }
-  }
-}
-
-.multi-select{
-  position: relative;
-  .output{
-    display: flex;
-    padding: 7px;
-    background: #fff;
-    border: 1px solid $gray;
-    cursor: pointer;
-  }
-  .btn-show-options{
-    width: 20px;
-    height: 20px;
-    margin-left: auto;
+  &__input[type="color"] {
+    width: 60px;
+    padding: 0;
+    font-size: 2em;
+    background: transparent;
     border: none;
-    outline: none;
-    background: transparent url('../../assets/img/down-arrow.svg');
-    background-size: 100%;
     cursor: pointer;
   }
-  .options{
-    position: absolute;
-    z-index: 1;
-    background: #fff;
-    top: 90%;
-    left: 0;
-    width: 100%;
-    max-height: 180px;
-    overflow-y: auto;
-    margin-top: -1px;
-    border: 1px solid $gray;
-    box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
-    &__item{
-      padding: 7px;
-      cursor: pointer;
-      &:hover{
-        background: $gray;
-      }
-    }
-  }
-}
-
-.selected-options__item{
-  display: inline-block;
-  padding: 4px;
-  margin: 0 5px 0 0;
-  border-radius: 8px;
-  background: $gray;
-  font-size: .88em;
-}
-
-.task select{
-  position: relative;
-  background: transparent;
-  appearance: none;
-  cursor: pointer;
-}
-
-.task .row:last-of-type .col:last-child{
-  position: relative;
-  &::before{
-    position: absolute;
-    content: '';
-    top: 10px;
-    right: 7px;
-    width: 20px;
-    height: 20px;
-    background: transparent url('../../assets/img/down-arrow.svg');
-    background-size: 100%;
-  }
-}
-
-.selected{
-  background: $gray;
 }

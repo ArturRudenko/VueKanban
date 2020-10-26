@@ -33,6 +33,7 @@ export default {
       state.items.push({
         id: uuidv4(),
         status: status,
+        date: new Date(),
         tags: tags,
         title: title,
         text: text
