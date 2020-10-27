@@ -2,6 +2,7 @@
   <div class="kanban__content">
     <kanban-col v-for="(col) of columns"
                 :key="col.alias"
+                :data-status="col.alias"
                 :items-amount="itemsFilteredByStatuses[col.alias].length"
                 @sort="$emit('sort', itemsFilteredByStatuses[col.alias])">
       <template #title>

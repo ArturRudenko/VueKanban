@@ -91,26 +91,22 @@ export default {
       }
     },
     confirmUpdate: function () {
-      if (!this.editedTask.title && this.editedTask.text && this.editedTask.tags && this.editedTask.status) {
-        return
-      }
+      if (!this.editedTask.title && this.editedTask.text && this.editedTask.tags && this.editedTask.status) return
 
-      if (this.allItems.find(item => item.id === this.task.id)) {
-        this.updateItem({
-          id: this.task.id,
-          status: this.editedTask.status,
-          title: this.editedTask.title,
-          text: this.editedTask.text,
-          tags: this.editedTask.tags
-        });
-      } else {
-        this.addItem({
-          status: this.editedTask.status,
-          title: this.editedTask.title,
-          text: this.editedTask.text,
-          tags: this.editedTask.tags
-        });
-      }
+      this.allItems.find(item => item.id === this.task.id) ?
+      this.updateItem({
+        id: this.task.id,
+        status: this.editedTask.status,
+        title: this.editedTask.title,
+        text: this.editedTask.text,
+        tags: this.editedTask.tags
+      }) :
+      this.addItem({
+        status: this.editedTask.status,
+        title: this.editedTask.title,
+        text: this.editedTask.text,
+        tags: this.editedTask.tags
+      });
 
       this.isEdited = true;
       setTimeout(() => this.isEdited = false, 5000);

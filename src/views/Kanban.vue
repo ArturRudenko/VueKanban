@@ -11,19 +11,15 @@
       <template v-slot:kanban-items="{ currentColItems }">
           <kanban-item  v-for="item in currentColItems"
                         :key="item.id"
+                        :data-id="item.id"
                         :item="item"
                         @update="changeModalStatus"
-                        @remove="removeFromItems" />
+                        @remove="removeFromItems"
+                        draggable="true"/>
       </template>
     </kanban-comp>
   </div>
 </template>
-
-/*
-
-- Починить drag-and-drop
-
-*/
 
 <script>
 import KanbanComp from "@/components/KanbanComp";
@@ -32,7 +28,6 @@ import Modal from '@/components/Modal';
 import TaskForm from '@/components/TaskForm';
 import MultiSelect from "@/components/MultiSelect";
 import BtnComp from "@/components/BtnComp";
-import columnProperties from "@/utils/columnProperties";
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -72,9 +67,9 @@ export default {
     },
     sortItemsByDate: function (items) {
       items.isBeenSorted = !items.isBeenSorted
-      if (items.isBeenSorted) {
-        items.sort((prevItem, nextItem) => prevItem.date.getTime() - nextItem.date.getTime())
-      } else items.sort((prevItem, nextItem) => nextItem.date.getTime() - prevItem.date.getTime())
+      items.isBeenSorted ?
+      items.sort((prevItem, nextItem) => prevItem.date.getTime() - nextItem.date.getTime()):
+      items.sort((prevItem, nextItem) => nextItem.date.getTime() - prevItem.date.getTime())
     },
   },
   async created() {
@@ -83,9 +78,7 @@ export default {
   computed: {
     ...mapGetters('tags', ['allTags']),
     ...mapGetters('tasks', ['allItems']),
-    allColumns() {
-      return  columnProperties
-    }
+    ...mapGetters('columns', ['allColumns']),
   }
 }
 </script>
